@@ -1,79 +1,159 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CTA Lobby Bus Arrivals</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CTA Bus Arrivals</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif}body{overflow:hidden}
-.screen{height:100vh;display:flex;flex-direction:column}header{height:17vh;min-height:120px;padding:18px 30px;background:#202020;display:flex;align-items:center;justify-content:space-between}
-.title{font-size:clamp(28px,4vw,54px);font-weight:800}.subtitle{font-size:clamp(18px,2vw,30px);margin-top:5px;color:#ddd}.clock{font-size:clamp(24px,3vw,42px);font-weight:700;text-align:right}
-.updated{font-size:clamp(13px,1.4vw,20px);color:#bbb;margin-top:4px}.columns{height:75vh;display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#777}
-.side{background:#171717;display:flex;flex-direction:column}.sidehead{padding:16px 24px;background:#2b2b2b;border-bottom:2px solid #555}.direction{font-size:clamp(25px,3vw,42px);font-weight:900}
-.stop{font-size:clamp(15px,1.7vw,24px);color:#ccc;margin-top:3px}.rows{padding:8px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
-.row{min-height:0;flex:1;display:grid;grid-template-columns:100px 1fr 180px;align-items:center;padding:8px 14px;background:#242424;border-radius:8px}
-.route{font-size:clamp(30px,3.7vw,58px);font-weight:900;text-align:center}.dest{font-size:clamp(18px,2vw,32px);font-weight:700}
-.eta{text-align:right;font-size:clamp(30px,3.5vw,54px);font-weight:900}.eta small{display:block;font-size:.42em;color:#bbb;font-weight:600}
-.empty{font-size:clamp(22px,2.5vw,36px);color:#ccc;text-align:center;align-self:center;margin:auto}.error{color:#ffcc66}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
+.screen{height:100vh;display:flex;flex-direction:column}
+header{height:17vh;min-height:120px;padding:18px 30px;background:#202020;display:flex;align-items:center;justify-content:space-between}
+.title{font-size:clamp(28px,4vw,54px);font-weight:800}
+.subtitle{font-size:clamp(18px,2vw,30px);margin-top:5px;color:#ddd}
+.clock{font-size:clamp(24px,3vw,42px);font-weight:700;text-align:right}
+.updated{font-size:clamp(13px,1.4vw,20px);color:#bbb;margin-top:4px}
+.columns{height:75vh;display:grid;grid-template-columns:1fr 1fr;gap:3px;background:#777}
+.side{background:#171717;display:flex;flex-direction:column}
+.sidehead{padding:16px 24px;background:#2b2b2b;border-bottom:2px solid #555}
+.direction{font-size:clamp(25px,3vw,42px);font-weight:900}
+.stop{font-size:clamp(15px,1.7vw,24px);color:#ccc;margin-top:3px}
+.rows{padding:8px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.row{flex:1;display:grid;grid-template-columns:100px 1fr 180px;align-items:center;padding:8px 14px;background:#242424;border-radius:8px}
+.route{font-size:clamp(30px,3.7vw,58px);font-weight:900;text-align:center}
+.dest{font-size:clamp(18px,2vw,32px);font-weight:700}
+.eta{text-align:right;font-size:clamp(30px,3.5vw,54px);font-weight:900}
+.eta small{display:block;font-size:.42em;color:#bbb;font-weight:600}
+.empty{font-size:clamp(22px,2.5vw,36px);color:#ccc;text-align:center;margin:auto}
+.error{color:#ffcc66}
 footer{height:8vh;min-height:55px;background:#202020;display:flex;align-items:center;justify-content:center;font-size:clamp(13px,1.4vw,20px);color:#bbb}
-</style></head>
-<body><div class="screen">
-<header><div><div class="title">CTA BUS ARRIVALS</div><div class="subtitle">Sheridan &amp; Catalpa</div></div>
-<div><div class="clock" id="clock">--:--</div><div class="updated" id="updated">Connecting to CTA…</div></div></header>
+</style>
+</head>
+<body>
+<div class="screen">
+<header>
+  <div><div class="title">CTA BUS ARRIVALS</div><div class="subtitle">Sheridan &amp; Catalpa</div></div>
+  <div><div class="clock" id="clock">--:--</div><div class="updated" id="updated">Connecting…</div></div>
+</header>
+
 <main class="columns">
-<section class="side"><div class="sidehead"><div class="direction">SOUTHBOUND</div><div class="stop">STOP 1039</div></div><div class="rows" id="south"><div class="empty">Loading…</div></div></section>
-<section class="side"><div class="sidehead"><div class="direction">NORTHBOUND</div><div class="stop">STOP 1187</div></div><div class="rows" id="north"><div class="empty">Loading…</div></div></section>
-</main><footer>Live CTA Bus Tracker data • Automatically refreshes every 60 seconds</footer></div>
+  <section class="side">
+    <div class="sidehead"><div class="direction">SOUTHBOUND</div><div class="stop">STOP 1039</div></div>
+    <div class="rows" id="south"><div class="empty">Loading…</div></div>
+  </section>
+  <section class="side">
+    <div class="sidehead"><div class="direction">NORTHBOUND</div><div class="stop">STOP 1187</div></div>
+    <div class="rows" id="north"><div class="empty">Loading…</div></div>
+  </section>
+</main>
+
+<footer>Live CTA Bus Tracker data • Automatically refreshes every 60 seconds</footer>
+</div>
+
 <script>
-const WORKER="https://square-paper-30a7.engineer-c01.workers.dev/";
-const REFRESH_MS=60000;
+var WORKER = "https://square-paper-30a7.engineer-c01.workers.dev/";
 
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-
-async function getPredictions(stop){
-  const response=await fetch(WORKER+"?stop="+stop+"&_="+Date.now(),{cache:"no-store"});
-  if(!response.ok) throw new Error("HTTP "+response.status);
-  const json=await response.json();
-  const root=json["bustime-response"];
-  if(!root) throw new Error("Unexpected CTA response");
-  if(root.error && root.error.length) throw new Error(root.error[0].msg || "CTA error");
-  return Array.isArray(root.prd) ? root.prd : [];
+function esc(v){
+  return String(v == null ? "" : v).replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
 }
 
-function showPredictions(elementId,predictions){
-  const el=document.getElementById(elementId);
-  if(!predictions.length){
-    el.innerHTML='<div class="empty">No upcoming buses</div>';
+function render(id, predictions){
+  var el = document.getElementById(id);
+
+  if (!predictions || !predictions.length){
+    el.innerHTML = '<div class="empty">No upcoming buses</div>';
     return;
   }
-  el.innerHTML=predictions.slice(0,6).map(p=>{
-    const raw=String(p.prdctdn ?? "").trim();
-    let eta;
-    if(raw==="DUE" || raw==="0") eta="DUE";
-    else if(/^\d+$/.test(raw)) eta=raw+" min";
-    else eta=raw || "—";
-    return `<div class="row">
-      <div class="route">${esc(p.rt)}</div>
-      <div class="dest">${esc(p.des || p.rtdir || "")}</div>
-      <div class="eta">${esc(eta)}<small>${eta==="DUE"?"":"estimated arrival"}</small></div>
-    </div>`;
-  }).join("");
+
+  var rows = predictions.slice(0,6).map(function(p){
+    var raw = String(p.prdctdn == null ? "" : p.prdctdn).trim();
+    var eta = raw;
+
+    if (raw === "0" || raw.toUpperCase() === "DUE") eta = "DUE";
+    else if (/^[0-9]+$/.test(raw)) eta = raw + " min";
+    else if (!raw) eta = "—";
+
+    return '<div class="row">' +
+      '<div class="route">' + esc(p.rt) + '</div>' +
+      '<div class="dest">' + esc(p.des || p.rtdir || "") + '</div>' +
+      '<div class="eta">' + esc(eta) +
+      '<small>' + (eta === "DUE" ? "" : "estimated arrival") + '</small></div>' +
+      '</div>';
+  });
+
+  el.innerHTML = rows.join("");
 }
 
-function showError(elementId,message){
-  document.getElementById(elementId).innerHTML='<div class="empty error">'+esc(message)+'</div>';
+function loadStop(stop, elementId){
+  var url = WORKER + "?stop=" + encodeURIComponent(stop) + "&_=" + Date.now();
+
+  return fetch(url, {cache:"no-store"})
+    .then(function(response){
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      return response.text();
+    })
+    .then(function(text){
+      var data;
+      try {
+        data = JSON.parse(text);
+      } catch(e) {
+        throw new Error("Worker returned invalid JSON");
+      }
+
+      var root = data && data["bustime-response"];
+      if (!root) throw new Error("Missing bustime-response");
+
+      /* IMPORTANT: if predictions exist, use them even if CTA also includes an error field */
+      if (Array.isArray(root.prd)) {
+        render(elementId, root.prd);
+        return true;
+      }
+
+      if (root.error && root.error.length) {
+        var msg = root.error[0] && root.error[0].msg ? root.error[0].msg : "CTA error";
+        if (/no (service|data|prediction)/i.test(msg)) {
+          render(elementId, []);
+          return true;
+        }
+        throw new Error(msg);
+      }
+
+      render(elementId, []);
+      return true;
+    })
+    .catch(function(err){
+      console.error("CTA stop " + stop + ":", err);
+      document.getElementById(elementId).innerHTML =
+        '<div class="empty error">Live data temporarily unavailable</div>';
+      return false;
+    });
 }
 
-async function load(){
-  const results=await Promise.allSettled([getPredictions("1039"),getPredictions("1187")]);
-  let ok=0;
-  if(results[0].status==="fulfilled"){showPredictions("south",results[0].value);ok++;}
-  else showError("south","Live data temporarily unavailable");
-  if(results[1].status==="fulfilled"){showPredictions("north",results[1].value);ok++;}
-  else showError("north","Live data temporarily unavailable");
-  const now=new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
-  document.getElementById("updated").textContent=ok===2?"Updated "+now:ok===1?"Partial data • Updated "+now:"Connection problem — retrying";
+function load(){
+  Promise.all([
+    loadStop("1039","south"),
+    loadStop("1187","north")
+  ]).then(function(results){
+    var ok = (results[0] ? 1 : 0) + (results[1] ? 1 : 0);
+    var now = new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+    document.getElementById("updated").textContent =
+      ok === 2 ? "Updated " + now :
+      ok === 1 ? "Partial data • Updated " + now :
+      "Connection problem — retrying";
+  });
 }
 
-function tick(){document.getElementById("clock").textContent=new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});}
-tick();setInterval(tick,1000);load();setInterval(load,REFRESH_MS);
-</script></body></html>
+function tick(){
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+}
+
+tick();
+setInterval(tick,1000);
+load();
+setInterval(load,60000);
+</script>
+</body>
+</html>
